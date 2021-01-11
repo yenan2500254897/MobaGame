@@ -6,6 +6,7 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "MobaGameCharacter.h"
 #include "Engine/World.h"
+#include "MobaPawn.h"
 
 AMobaGamePlayerController::AMobaGamePlayerController()
 {
@@ -18,9 +19,13 @@ void AMobaGamePlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 
 	// keep updating the destination every tick while desired
-	if (bMoveToMouseCursor)
+	if (GetLocalRole() == ENetRole::ROLE_AutonomousProxy)
 	{
-		MoveToMouseCursor();
+		if (bMoveToMouseCursor)
+		{
+			MoveToMouseCursor();
+		}
+
 	}
 }
 
@@ -46,7 +51,7 @@ void AMobaGamePlayerController::OnResetVR()
 
 void AMobaGamePlayerController::MoveToMouseCursor()
 {
-	if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
+	/*if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
 	{
 		if (AMobaGameCharacter* MyPawn = Cast<AMobaGameCharacter>(GetPawn()))
 		{
@@ -56,8 +61,8 @@ void AMobaGamePlayerController::MoveToMouseCursor()
 			}
 		}
 	}
-	else
-	{
+	else*/
+	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn())) {
 		// Trace to see what is under the mouse cursor
 		FHitResult Hit;
 		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
@@ -65,36 +70,24 @@ void AMobaGamePlayerController::MoveToMouseCursor()
 		if (Hit.bBlockingHit)
 		{
 			// We hit something, move there
-			SetNewMoveDestination(Hit.ImpactPoint);
+			MyPawn->CharacterMoveToOnServer(Hit.ImpactPoint);
 		}
 	}
 }
 
 void AMobaGamePlayerController::MoveToTouchLocation(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
-	FVector2D ScreenSpaceLocation(Location);
-
-	// Trace to see what is under the touch location
-	FHitResult HitResult;
-	GetHitResultAtScreenPosition(ScreenSpaceLocation, CurrentClickTraceChannel, true, HitResult);
-	if (HitResult.bBlockingHit)
+	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn()))
 	{
-		// We hit something, move there
-		SetNewMoveDestination(HitResult.ImpactPoint);
-	}
-}
+		FVector2D ScreenSpaceLocation(Location);
 
-void AMobaGamePlayerController::SetNewMoveDestination(const FVector DestLocation)
-{
-	APawn* const MyPawn = GetPawn();
-	if (MyPawn)
-	{
-		float const Distance = FVector::Dist(DestLocation, MyPawn->GetActorLocation());
-
-		// We need to issue move command only if far enough in order for walk animation to play correctly
-		if ((Distance > 120.0f))
+		// Trace to see what is under the touch location
+		FHitResult HitResult;
+		GetHitResultAtScreenPosition(ScreenSpaceLocation, CurrentClickTraceChannel, true, HitResult);
+		if (HitResult.bBlockingHit)
 		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, DestLocation);
+			// We hit something, move there
+			MyPawn->CharacterMoveToOnServer(HitResult.ImpactPoint);
 		}
 	}
 }
