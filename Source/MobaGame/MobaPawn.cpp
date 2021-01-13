@@ -12,6 +12,7 @@
 #include "Materials/Material.h"
 #include "Engine/World.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
+#include "Engine/Engine.h"
 
 
 // Sets default values
@@ -94,6 +95,10 @@ void AMobaPawn::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void AMobaPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	FString NumberString;
+	FFileHelper::LoadFileToString(NumberString, *(FPaths::ProjectDir() / TEXT("CharacterID.txt")));
+	int32 CharacterID = FCString::Atoi64(*NumberString);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("CharacterID:=%d"), CharacterID));
 
 	if (GetLocalRole() == ROLE_AutonomousProxy)
 	{
