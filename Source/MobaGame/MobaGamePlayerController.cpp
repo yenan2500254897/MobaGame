@@ -7,7 +7,7 @@
 #include "MobaGameCharacter.h"
 #include "Engine/World.h"
 #include "MobaPawn.h"
-
+#include "Tool/ScreenMoveUnits.h"
 AMobaGamePlayerController::AMobaGamePlayerController()
 {
 	bShowMouseCursor = true;
@@ -25,7 +25,7 @@ void AMobaGamePlayerController::PlayerTick(float DeltaTime)
 		{
 			MoveToMouseCursor();
 		}
-
+		FScreenMoveUnits().ListenScreenMove(this, 10.f);
 	}
 }
 
