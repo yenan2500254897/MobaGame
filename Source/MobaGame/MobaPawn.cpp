@@ -2,7 +2,6 @@
 
 
 #include "MobaPawn.h"
-#include "MobaGameCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
@@ -13,6 +12,9 @@
 #include "Engine/World.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Engine/Engine.h"
+#include "MobaGameState.h"
+#include "Common/MethodUnit.h"
+#include "Character/CharacterInstance/MobaGameCharacter.h"
 
 
 // Sets default values
@@ -69,9 +71,26 @@ void AMobaPawn::BeginPlay()
 
 	if (GetLocalRole() == ROLE_Authority)
 	{
-		if (DefaultPawnClass)
+		if (AMobaGameState* GameState = MethodUnit::GetGameState(GetWorld()))
 		{
-			MobaGameCharacter = GetWorld()->SpawnActor<AMobaGameCharacter>(DefaultPawnClass, GetActorLocation(), GetActorRotation());
+			FString NumberString;
+			FFileHelper::LoadFileToString(NumberString, *(FPaths::ProjectDir() / TEXT("CharacterID.txt")));
+
+			int32 CharacterID = FCString::Atoi64(*NumberString);
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString::Printf(TEXT("id:=%d", CharacterID)));
+			if (const FCharacterTable* InTable = GameState->GetCharacterTable(CharacterID))
+			{
+				DefaultPawnClass = InTable->CharacterClass;
+			}
+
+			if (DefaultPawnClass)
+			{
+				MobaGameCharacter = GetWorld()->SpawnActor<AMobaGameCharacter>(DefaultPawnClass, GetActorLocation(), GetActorRotation());
+				if (MobaGameCharacter)
+				{
+					MobaGameCharacter->InitCharacterID(CharacterID);
+				}
+			}
 		}
 	}
 	
