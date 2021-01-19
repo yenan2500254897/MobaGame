@@ -172,3 +172,12 @@ void AMobaPawn::CharacterMoveToTargetAttackOnServer_Implementation(const FVector
 		}
 	}
 }
+
+
+void AMobaPawn::SkillAttack(ESkillKeyType SkillKey, TWeakObjectPtr<AMobaGameCharacter> InTarget)
+{
+	if (MobaGameCharacter)
+	{
+		MobaGameCharacter->SkillAttack(SkillKey, InTarget);
+	}
+}

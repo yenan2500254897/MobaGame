@@ -17,7 +17,7 @@ public:
 
 	void NormalAttack(TWeakObjectPtr<AMobaGameCharacter> InTarget);
 
-	void SkillAttack(ESkillKeyType SillKey, TWeakObjectPtr<AMobaGameCharacter> InTarget);
+	void SkillAttack(ESkillKeyType SkillKey, TWeakObjectPtr<AMobaGameCharacter> InTarget);
 
 	void InitCharacterID(const int64& InID);
 

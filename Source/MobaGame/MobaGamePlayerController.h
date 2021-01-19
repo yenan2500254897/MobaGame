@@ -36,6 +36,30 @@ protected:
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
 
+	UFUNCTION(server, reliable)
+		void OnSetQPressed();
+		void OnSetQReleased();
+
+	UFUNCTION(server, reliable)
+		void OnSetWPressed();
+		void OnSetWReleased();
+
+	UFUNCTION(server, reliable)
+		void OnSetEPressed();
+		void OnSetEReleased();
+
+	UFUNCTION(server, reliable)
+		void OnSetRPressed();
+		void OnSetRReleased();
+
+	//UFUNCTION(server, reliable)
+		void OnSetDPressed();
+		void OnSetDReleased();
+
+	//UFUNCTION(server, reliable)
+		void OnSetFPressed();
+		void OnSetFReleased();
+
 protected:
 	UFUNCTION(Server, reliable, WithValidation)
 		void VerifyMouseWorldPostionClickOnServer(const FVector& WorldOrigin, const FVector& WorldDirection);

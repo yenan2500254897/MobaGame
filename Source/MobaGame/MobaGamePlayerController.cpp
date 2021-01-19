@@ -38,6 +38,24 @@ void AMobaGamePlayerController::SetupInputComponent()
 	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AMobaGamePlayerController::OnSetDestinationPressed);
 	InputComponent->BindAction("SetDestination", IE_Released, this, &AMobaGamePlayerController::OnSetDestinationReleased);
 
+	InputComponent->BindAction("Q", IE_Pressed, this, &AMobaGamePlayerController::OnSetQPressed);
+	InputComponent->BindAction("Q", IE_Released, this, &AMobaGamePlayerController::OnSetQReleased);
+
+	InputComponent->BindAction("W", IE_Pressed, this, &AMobaGamePlayerController::OnSetWPressed);
+	InputComponent->BindAction("W", IE_Released, this, &AMobaGamePlayerController::OnSetWReleased);
+
+	InputComponent->BindAction("E", IE_Pressed, this, &AMobaGamePlayerController::OnSetEPressed);
+	InputComponent->BindAction("E", IE_Released, this, &AMobaGamePlayerController::OnSetEReleased);
+
+	InputComponent->BindAction("R", IE_Pressed, this, &AMobaGamePlayerController::OnSetRPressed);
+	InputComponent->BindAction("R", IE_Released, this, &AMobaGamePlayerController::OnSetRReleased);
+
+	InputComponent->BindAction("D", IE_Pressed, this, &AMobaGamePlayerController::OnSetDPressed);
+	InputComponent->BindAction("D", IE_Released, this, &AMobaGamePlayerController::OnSetDReleased);
+
+	InputComponent->BindAction("F", IE_Pressed, this, &AMobaGamePlayerController::OnSetFPressed);
+	InputComponent->BindAction("F", IE_Released, this, &AMobaGamePlayerController::OnSetFReleased);
+
 	// support touch devices 
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AMobaGamePlayerController::MoveToTouchLocation);
 	InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AMobaGamePlayerController::MoveToTouchLocation);
@@ -105,6 +123,78 @@ void AMobaGamePlayerController::OnSetDestinationReleased()
 {
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
+}
+
+void AMobaGamePlayerController::OnSetQPressed_Implementation()
+{
+	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn()))
+	{
+		MyPawn->SkillAttack(ESkillKeyType::KEY_Q, NULL);
+	}
+}
+
+void AMobaGamePlayerController::OnSetQReleased()
+{
+
+}
+
+void AMobaGamePlayerController::OnSetWPressed_Implementation()
+{
+	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn()))
+	{
+		MyPawn->SkillAttack(ESkillKeyType::KEY_W, NULL);
+	}
+}
+
+void AMobaGamePlayerController::OnSetWReleased()
+{
+
+}
+
+void AMobaGamePlayerController::OnSetEPressed_Implementation()
+{
+	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn()))
+	{
+		MyPawn->SkillAttack(ESkillKeyType::KEY_E, NULL);
+	}
+}
+
+void AMobaGamePlayerController::OnSetEReleased()
+{
+
+}
+
+void AMobaGamePlayerController::OnSetRPressed_Implementation()
+{
+	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn()))
+	{
+		MyPawn->SkillAttack(ESkillKeyType::KEY_R, NULL);
+	}
+}
+
+void AMobaGamePlayerController::OnSetRReleased()
+{
+
+}
+
+void AMobaGamePlayerController::OnSetDPressed()
+{
+
+}
+
+void AMobaGamePlayerController::OnSetDReleased()
+{
+
+}
+
+void AMobaGamePlayerController::OnSetFPressed()
+{
+
+}
+
+void AMobaGamePlayerController::OnSetFReleased()
+{
+
 }
 
 void AMobaGamePlayerController::VerifyMouseWorldPostionClickOnServer_Implementation(const FVector& WorldOrigin, const FVector& WorldDirection)

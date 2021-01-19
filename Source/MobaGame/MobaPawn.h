@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "MobaGameType.h"
 #include "MobaPawn.generated.h"
 
 class AMobaGameCharacter;
@@ -17,6 +18,9 @@ public:
 	/** The default pawn class used by players. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Classes)
 		TSubclassOf<APawn> DefaultPawnClass;
+
+public:
+	void SkillAttack(ESkillKeyType SkillKey, TWeakObjectPtr<AMobaGameCharacter> InTarget);
 
 public:
 
