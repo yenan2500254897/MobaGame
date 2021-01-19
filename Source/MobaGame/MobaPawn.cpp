@@ -15,6 +15,7 @@
 #include "MobaGameState.h"
 #include "Common/MethodUnit.h"
 #include "Character/CharacterInstance/MobaGameCharacter.h"
+#include "Character/AI/AIController/MobaGameAIController.h"
 
 
 // Sets default values
@@ -77,7 +78,7 @@ void AMobaPawn::BeginPlay()
 			FFileHelper::LoadFileToString(NumberString, *(FPaths::ProjectDir() / TEXT("CharacterID.txt")));
 
 			int32 CharacterID = FCString::Atoi64(*NumberString);
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString::Printf(TEXT("id:=%d", CharacterID)));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString::Printf(TEXT("id:=%d", CharacterID)));
 			if (const FCharacterTable* InTable = GameState->GetCharacterTable(CharacterID))
 			{
 				DefaultPawnClass = InTable->CharacterClass;
@@ -153,7 +154,10 @@ void AMobaPawn::CharacterMoveToOnServer_Implementation(const FVector& DirectionL
 		// We need to issue move command only if far enough in order for walk animation to play correctly
 		if ((Distance > 120.0f))
 		{
-			UAIBlueprintHelperLibrary::SimpleMoveToLocation(MobaGameCharacter->GetController(), DirectionLocation);
+			if (AMobaGameAIController* MGAIController = Cast<AMobaGameAIController>(MobaGameCharacter->GetController()))
+			{
+				MGAIController->SimpleMoveToLocation(DirectionLocation);
+			}
 		}
 	}
 }
