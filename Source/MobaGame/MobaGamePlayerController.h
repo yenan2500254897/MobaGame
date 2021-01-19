@@ -35,6 +35,10 @@ protected:
 	/** Input handlers for SetDestination action. */
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
+
+protected:
+	UFUNCTION(Server, reliable, WithValidation)
+		void VerifyMouseWorldPostionClickOnServer(const FVector& WorldOrigin, const FVector& WorldDirection);
 };
 
 

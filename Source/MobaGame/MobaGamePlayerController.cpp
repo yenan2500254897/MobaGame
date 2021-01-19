@@ -7,6 +7,7 @@
 #include "Character/CharacterInstance/MobaGameCharacter.h"
 #include "Engine/World.h"
 #include "MobaPawn.h"
+#include "Kismet/GameplayStatics.h"
 #include "Tool/ScreenMoveUnits.h"
 AMobaGamePlayerController::AMobaGamePlayerController()
 {
@@ -51,26 +52,28 @@ void AMobaGamePlayerController::OnResetVR()
 
 void AMobaGamePlayerController::MoveToMouseCursor()
 {
-	/*if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
+	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn()))
 	{
-		if (AMobaGameCharacter* MyPawn = Cast<AMobaGameCharacter>(GetPawn()))
+		// Trace to see what is under the mouse cursor		
+		ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player);
+		if (LocalPlayer && LocalPlayer->ViewportClient)
 		{
-			if (MyPawn->GetCursorToWorld())
+			FVector2D MousePosition;
+			if (LocalPlayer->ViewportClient->GetMousePosition(MousePosition))
 			{
-				UAIBlueprintHelperLibrary::SimpleMoveToLocation(this, MyPawn->GetCursorToWorld()->GetComponentLocation());
-			}
-		}
-	}
-	else*/
-	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn())) {
-		// Trace to see what is under the mouse cursor
-		FHitResult Hit;
-		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+				// Early out if we clicked on a HUD hitbox
+				/*if (GetHUD() != NULL && GetHUD()->GetHitBoxAtCoordinates(MousePosition, true))
+				{
+					return;
+				}*/
 
-		if (Hit.bBlockingHit)
-		{
-			// We hit something, move there
-			MyPawn->CharacterMoveToOnServer(Hit.ImpactPoint);
+				FVector WorldOrigin;
+				FVector WorldDirection;
+				if (UGameplayStatics::DeprojectScreenToWorld(this, MousePosition, WorldOrigin, WorldDirection) == true)
+				{
+					VerifyMouseWorldPostionClickOnServer(WorldOrigin, WorldDirection);
+				}
+			}
 		}
 	}
 }
@@ -102,4 +105,40 @@ void AMobaGamePlayerController::OnSetDestinationReleased()
 {
 	// clear flag to indicate we should stop updating the destination
 	bMoveToMouseCursor = false;
+}
+
+void AMobaGamePlayerController::VerifyMouseWorldPostionClickOnServer_Implementation(const FVector& WorldOrigin, const FVector& WorldDirection)
+{
+	if (AMobaPawn* MyPawn = Cast<AMobaPawn>(GetPawn()))
+	{
+		FHitResult HitResult;
+		FCollisionQueryParams CollisionQueryParams(SCENE_QUERY_STAT(ClickableTrace), false);
+
+		auto TracePos = [&](ECollisionChannel InChannel)->bool
+		{
+			return GetWorld()->LineTraceSingleByChannel(HitResult, WorldOrigin, WorldOrigin + WorldDirection * HitResultTraceDistance, InChannel, CollisionQueryParams);
+		};
+		
+		if (TracePos(ECC_GameTraceChannel1))
+		{
+			if (HitResult.bBlockingHit)
+			{
+				MyPawn->CharacterMoveToTargetAttackOnServer(HitResult.ImpactPoint, Cast<APawn>(HitResult.Actor));
+				return;
+			}
+		}
+
+		if (TracePos(ECC_Visibility))
+		{
+			if (HitResult.bBlockingHit)
+			{
+				MyPawn->CharacterMoveToOnServer(HitResult.ImpactPoint);
+			}
+		}
+	}
+}
+
+bool AMobaGamePlayerController::VerifyMouseWorldPostionClickOnServer_Validate(const FVector& WorldOrigin, const FVector& WorldDirection)
+{
+	return true;
 }

@@ -161,3 +161,14 @@ void AMobaPawn::CharacterMoveToOnServer_Implementation(const FVector& DirectionL
 		}
 	}
 }
+
+void AMobaPawn::CharacterMoveToTargetAttackOnServer_Implementation(const FVector& DirectionLocation, const APawn* InPawn)
+{
+	if (MobaGameCharacter)
+	{
+		if (AMobaGameAIController* MGAIController = Cast<AMobaGameAIController>(MobaGameCharacter->GetController()))
+		{
+			MGAIController->SetTargetForce(Cast<AMobaGameCharacter>(const_cast<APawn*>(InPawn)));
+		}
+	}
+}

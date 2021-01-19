@@ -47,6 +47,9 @@ public:
 
 	UFUNCTION(server, reliable)
 		void CharacterMoveToOnServer(const FVector& DirectionLocation);
+
+	UFUNCTION(server, reliable)
+		void CharacterMoveToTargetAttackOnServer(const FVector& DirectionLocation, const APawn* InPawn);
 public:
 
 	// Sets default values for this pawn's properties
