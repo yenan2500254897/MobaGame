@@ -77,7 +77,7 @@ void AMobaPawn::BeginPlay()
 			FString NumberString;
 			FFileHelper::LoadFileToString(NumberString, *(FPaths::ProjectDir() / TEXT("CharacterID.txt")));
 
-			int32 CharacterID = FCString::Atoi64(*NumberString);
+			int32 CharacterID = FCString::Atoi(*NumberString);
 			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString::Printf(TEXT("id:=%d", CharacterID)));
 			if (const FCharacterTable* InTable = GameState->GetCharacterTable(CharacterID))
 			{

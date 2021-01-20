@@ -19,7 +19,7 @@ public:
 
 	void SkillAttack(ESkillKeyType SkillKey, TWeakObjectPtr<AMobaGameCharacter> InTarget);
 
-	void InitCharacterID(const int64& InID);
+	void InitCharacterID(const int32& InCharacterID);
 
 	UFUNCTION(NetMulticast, unreliable)
 		void MultCastPlayerAnimMontage(UAnimMontage* InAnimMontage, float InPlayRate = 1.0f, FName StartSectionName = NAME_None);
@@ -36,6 +36,6 @@ private:
 
 	bool bAttacking;
 	uint8 AttackCount;
-	int64 CharacterID;
+	int32 CharacterID;
 };
 

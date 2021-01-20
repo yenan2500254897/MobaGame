@@ -85,9 +85,9 @@ void AMobaGameCharacter::SkillAttack(ESkillKeyType SkillKey, TWeakObjectPtr<AMob
 	}
 }
 
-void AMobaGameCharacter::InitCharacterID(const int64& InID)
+void AMobaGameCharacter::InitCharacterID(const int32& InCharacterID)
 {
-	CharacterID = InID;
+	CharacterID = InCharacterID;
 }
 
 void AMobaGameCharacter::BeginPlay()
