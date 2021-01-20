@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
 #include "Table/CharacterTable.h"
+#include "Data/MisData.h"
 #include "MobaGameState.generated.h"
 
 /**
@@ -20,7 +21,17 @@ public:
 
 	const TArray<FCharacterTable*>* GetCharacterTables();
 
-	const FCharacterTable* GetCharacterTable(const int64& InID);
+	//根据characterID拿到character属性
+	const FCharacterTable* GetCharacterTable(const int32& InCharacterID);
+
+	/*void UpdateCharacterAILocation(int64 InPlayerID, const FVector& InLocation);
+	void AddCharacterAILocation(int64 InPlayerID, const FVector& InLocation);
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+		bool GetCharacterAILocation(int64 InPlayerID, FVector& InLocation);
+	const TArray<FPlayerLocation>& GetPlayerLocations();*/
+
+protected:
+	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;
 
 protected:
 	UPROPERTY()
@@ -28,4 +39,7 @@ protected:
 
 private:
 	TArray<FCharacterTable*> CacheCharacterTables;
+
+	//UPROPERTY(Replicated)
+	//	TArray<FPlayerLocation> PlayerLocation;
 };
