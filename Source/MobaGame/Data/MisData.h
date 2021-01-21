@@ -12,8 +12,9 @@ struct FPlayerLocation
 
 	FPlayerLocation();
 
+	//玩家ID
 	UPROPERTY()
-	int64 CharacterID;
+	int64 PlayerID;
 
 	UPROPERTY()
 	FVector Location;

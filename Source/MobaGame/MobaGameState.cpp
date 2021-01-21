@@ -8,6 +8,7 @@ AMobaGameState::AMobaGameState()
 {
 	static ConstructorHelpers::FObjectFinder<UDataTable> Character_Table(TEXT("/Game/Table/CharacterTable"));
 	CharacterTablePtr = Character_Table.Object;
+
 }
 
 const TArray<FCharacterTable*>* AMobaGameState::GetCharacterTables()
@@ -44,51 +45,51 @@ void AMobaGameState::GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& Out
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	/*DOREPLIFETIME(AMobaGameState, PlayerLocation);*/
+	DOREPLIFETIME(AMobaGameState, PlayerLocation);
 }
 
-//void AMobaGameState::UpdateCharacterAILocation(int64 InPlayerID, const FVector& InLocation)
-//{
-//	for (auto& Tmp : PlayerLocation)
-//	{
-//		if (Tmp.CharacterID == InPlayerID)
-//		{
-//			Tmp.Location = InLocation;
-//			break;
-//		}
-//	}
-//}
-//
-//void AMobaGameState::AddCharacterAILocation(int64 InPlayerID, const FVector& InLocation)
-//{
-//	for (auto& Tmp : PlayerLocation)
-//	{
-//		if (Tmp.CharacterID == InPlayerID)
-//		{
-//			return;
-//		}
-//	}
-//
-//	PlayerLocation.Add(FPlayerLocation());
-//	PlayerLocation[PlayerLocation.Num() - 1].CharacterID = InPlayerID;
-//	PlayerLocation[PlayerLocation.Num() - 1].Location = InLocation;
-//}
-//
-//bool AMobaGameState::GetCharacterAILocation(int64 InPlayerID, FVector& InLocation)
-//{
-//	for (auto& Tmp : PlayerLocation)
-//	{
-//		if (Tmp.CharacterID == InPlayerID)
-//		{
-//			InLocation = Tmp.Location;
-//			return true;
-//		}
-//	}
-//
-//	return false;
-//}
-//
-//const TArray<FPlayerLocation>& AMobaGameState::GetPlayerLocations()
-//{
-//	return PlayerLocation;
-//}
+void AMobaGameState::UpdateCharacterAILocation(int64 InPlayerID, const FVector& InLocation)
+{
+	for (auto& Tmp : PlayerLocation)
+	{
+		if (Tmp.PlayerID == InPlayerID)
+		{
+			Tmp.Location = InLocation;
+			break;
+		}
+	}
+}
+
+void AMobaGameState::AddCharacterAILocation(int64 InPlayerID, const FVector& InLocation)
+{
+	for (auto& Tmp : PlayerLocation)
+	{
+		if (Tmp.PlayerID == InPlayerID)
+		{
+			return;
+		}
+	}
+
+	PlayerLocation.Add(FPlayerLocation());
+	PlayerLocation[PlayerLocation.Num() - 1].PlayerID = InPlayerID;
+	PlayerLocation[PlayerLocation.Num() - 1].Location = InLocation;
+}
+
+bool AMobaGameState::GetCharacterAILocation(int64 InPlayerID, FVector& InLocation)
+{
+	for (auto& Tmp : PlayerLocation)
+	{
+		if (Tmp.PlayerID == InPlayerID)
+		{
+			InLocation = Tmp.Location;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+const TArray<FPlayerLocation>& AMobaGameState::GetPlayerLocations()
+{
+	return PlayerLocation;
+}
