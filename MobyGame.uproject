@@ -1,0 +1,23 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{7486324E-47BC-FF52-4B3F-578491B31868}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "MobyGame",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"AIModule"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "SimpleFileHelper",
+			"Enabled": true
+		}
+	]
+}
