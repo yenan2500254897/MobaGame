@@ -29,6 +29,8 @@ public:
 
 	void SetTargetForce(AMobyGameCharacter* InTarget);
 
+	AMobyGameCharacter* GetTarget() { return Target.Get(); }
+
 protected:
 	virtual void BeginPlay() override;
 
