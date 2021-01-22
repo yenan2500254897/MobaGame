@@ -9,6 +9,7 @@
 #include "../../Common/MethodUnit.h"
 #include "Components/WidgetComponent.h"
 #include "../../UI/Game/Character/UI_InformationBar.h"
+#include "Components/ArrowComponent.h"
 
 AMobyGameCharacter::AMobyGameCharacter()
 	:bAttacking(false)
@@ -19,7 +20,9 @@ AMobyGameCharacter::AMobyGameCharacter()
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
 	Widget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
+	OpenFriePoint = CreateDefaultSubobject<UArrowComponent>(TEXT("OpenFilePoint"));
 	Widget->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	OpenFriePoint->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	// Don't rotate character to camera direction
 	bUseControllerRotationPitch = false;
@@ -185,6 +188,39 @@ void AMobyGameCharacter::BeginPlay()
 	{
 		SpawnDefaultController();
 	}
+}
+
+float AMobyGameCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+
+	if (GetLocalRole() == ROLE_Authority)//if (GetWord()->IsServer())
+	{
+		if (AMobyGameState* InState = MethodUnit::GetGameState(GetWorld()))
+		{
+			GetCharacterAttribute()->Health += Damage;
+
+			MultCastWidgetInfo(
+				GetCharacterAttribute()->GetHealthPercentage(),
+				GetCharacterAttribute()->GetManaPercentage());
+			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "GameCharacter");
+
+			//if (IsDie())
+			//{
+			//	int32 CharacterID = InState->GetCharacterID(PlayerID);
+			//	if (const FCharacterTable* InTable = InState->GetCharacterTableTemplate(CharacterID))
+			//	{
+			//		int32 Index = FMath::RandRange(0, InTable->Death.Num() - 1);
+			//		MultCastPlayerAnimMontage(InTable->Death[Index]);
+
+			//		//GThread::Get()->GetCoroutines().BindUObject(5.f, this, &AMobyGameCharacter::MultCastReborn);
+			//	}
+			//}
+
+		}
+	}
+
+	return 0;
 }
 
 void AMobyGameCharacter::MultCastPlayerAnimMontage_Implementation(UAnimMontage* InMontage, float InPlayRate, FName StartSectionName)

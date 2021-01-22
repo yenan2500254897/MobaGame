@@ -9,6 +9,7 @@
 #include "MobyGameCharacter.generated.h"
 
 class UWidgetComponent;
+class UArrowComponent;
 UCLASS(Blueprintable)
 class AMobyGameCharacter : public ACharacter
 {
@@ -16,6 +17,9 @@ class AMobyGameCharacter : public ACharacter
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BaseAttrubute", meta = (AllowPrivateAccess = "true"))
 	UWidgetComponent* Widget;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "BaseAttrubute", meta = (AllowPrivateAccess = "true"))
+	UArrowComponent* OpenFriePoint;
 
 public:
 	AMobyGameCharacter();
@@ -51,6 +55,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
+
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 private:
 	bool bAttacking;

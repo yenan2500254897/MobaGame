@@ -7,6 +7,7 @@
 #include "../CharacterInstance/MobyGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "../AI/AIController/MobyGameAIController.h"
+#include "../../Common/NumericalCalculationUnit.h"
 
 // Sets default values
 ABullet::ABullet()
@@ -56,9 +57,8 @@ void ABullet::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 							}
 						}
 
-						/*float DamageValue = NumericalCalculationUnit::GetDamage(TargetCharacter, InstigatorCharacter);*/
-						float DamageValue = 100.f;
-
+						float DamageValue = NumericalCalculationUnit::GetDamage(TargetCharacter, InstigatorCharacter);
+						GEngine->AddOnScreenDebugMessage(-1, 0.5, FColor::Black, FString::Printf(TEXT("take damage value:%f"), DamageValue));
 						UGameplayStatics::ApplyDamage(
 							TargetCharacter,
 							DamageValue,

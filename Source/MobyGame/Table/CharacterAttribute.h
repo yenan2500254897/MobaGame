@@ -42,6 +42,9 @@ struct FCharacterAttribute : public FMobyGameTableBase
 	UPROPERTY(EditDefaultsOnly, Category = "Character Attribute")
 	float PhysicalAttack;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Character Attribute")
+	float CriticalStrike;
+
 	//护甲
 	UPROPERTY(EditDefaultsOnly, Category = "Character Attribute")
 	float Armor;

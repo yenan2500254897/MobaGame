@@ -16,6 +16,7 @@ void FCharacterAttribute::Init()
 	MaxHealth = 100.f;
 	Health = MaxHealth;
 	PhysicalAttack = 55.f;
+	CriticalStrike = 0.f;
 	Armor = 30.f;
 	MagicAttack = 0.0f;
 	MagicDefense = 0.0f;
