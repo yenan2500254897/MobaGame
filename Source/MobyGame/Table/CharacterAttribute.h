@@ -86,6 +86,7 @@ struct FCharacterAttribute : public FMobyGameTableBase
 	float RangeAttack;
 
 	void Init();
+	void Reset();
 
 	float GetHealthPercentage();
 	float GetManaPercentage();

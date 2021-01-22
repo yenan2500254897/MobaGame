@@ -29,6 +29,12 @@ void FCharacterAttribute::Init()
 	RangeAttack = 1000.f;
 }
 
+void FCharacterAttribute::Reset()
+{
+	Mana = MaxMana;
+	Health = MaxHealth;
+}
+
 float FCharacterAttribute::GetHealthPercentage()
 {
 	return Health / MaxHealth;

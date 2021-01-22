@@ -5,6 +5,7 @@
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Float.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
+#include "BehaviorTree/Blackboard/BlackboardKeyType_Bool.h"
 #include "../AIController/MobyGameAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
@@ -14,7 +15,8 @@ void UMobyGameCharacterBTService::TickNode(UBehaviorTreeComponent& OwnerComp, ui
 
 	if (BlackboardKey_Target.SelectedKeyType == UBlackboardKeyType_Object::StaticClass() &&
 		BlackboardKey_Distance.SelectedKeyType == UBlackboardKeyType_Float::StaticClass() &&
-		BlackboardKey_Location.SelectedKeyType == UBlackboardKeyType_Vector::StaticClass())
+		BlackboardKey_Location.SelectedKeyType == UBlackboardKeyType_Vector::StaticClass() &&
+		BlackBoardKey_Death.SelectedKeyType == UBlackboardKeyType_Bool::StaticClass())
 	{
 		if (AMobyGameAIController* OwnerController = Cast<AMobyGameAIController>(OwnerComp.GetOwner()))
 		{
@@ -22,6 +24,12 @@ void UMobyGameCharacterBTService::TickNode(UBehaviorTreeComponent& OwnerComp, ui
 			{
 				if (UBlackboardComponent* MyBlackBoard = OwnerComp.GetBlackboardComponent())
 				{
+					MyBlackBoard->SetValueAsBool(BlackBoardKey_Death.SelectedKeyName, OwnerCharacter->IsDie());
+					if (OwnerCharacter->IsDie())
+					{
+						return;
+					}
+					
 					AMobyGameCharacter* InTarget = Cast<AMobyGameCharacter>(MyBlackBoard->GetValueAsObject(BlackboardKey_Target.SelectedKeyName));
 					if (!InTarget)
 					{
@@ -65,5 +73,6 @@ void UMobyGameCharacterBTService::InitializeFromAsset(UBehaviorTree& Asset)
 		BlackboardKey_Target.ResolveSelectedKey(*BBAsset);
 		BlackboardKey_Distance.ResolveSelectedKey(*BBAsset);
 		BlackboardKey_Location.ResolveSelectedKey(*BBAsset);
+		BlackBoardKey_Death.ResolveSelectedKey(*BBAsset);
 	}
 }

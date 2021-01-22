@@ -38,9 +38,12 @@ public:
 	UFUNCTION(NetMulticast, unreliable)
 	void MultCastWidgetInfo(float InHPPercentage, float InManaPercentage);
 
-	UAnimMontage* GetCurrentSkillMontage(ESkillKeyType SkillType);
+	UFUNCTION(NetMulticast, unreliable)
+	void MultCastReborn();
 
 	FCharacterAttribute* GetCharacterAttribute();
+
+	UAnimMontage* GetCurrentSkillMontage(ESkillKeyType SkillType);
 
 	bool IsDie();
 

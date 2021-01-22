@@ -29,6 +29,9 @@ public:
 	UPROPERTY(EditAnyWhere, Category = "BlackBoard")
 	struct FBlackboardKeySelector BlackboardKey_Location;
 
+	UPROPERTY(EditAnywhere, Category = "BlackBoard")
+	struct FBlackboardKeySelector BlackBoardKey_Death;
+
 	/** Notify called after GameplayTask finishes initialization (not active yet) */
 	virtual void OnGameplayTaskInitialized(UGameplayTask& Task) {}
 

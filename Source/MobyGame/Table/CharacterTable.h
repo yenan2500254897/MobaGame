@@ -30,4 +30,7 @@ struct FCharacterTable : public FMobyGameTableBase
 
 	UPROPERTY(EditDefaultsOnly, Category = "Character Skill Montage")
 	UAnimMontage* RSkillAttack;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Character")
+	TArray<UAnimMontage*> Death;
 };

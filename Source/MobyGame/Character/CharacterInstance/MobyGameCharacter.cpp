@@ -83,6 +83,29 @@ void AMobyGameCharacter::MultCastWidgetInfo_Implementation(float InHPPercentage,
 	}
 }
 
+void AMobyGameCharacter::MultCastPlayerAnimMontage_Implementation(UAnimMontage* InMontage, float InPlayRate, FName StartSectionName)
+{
+	if (InMontage)
+	{
+		PlayAnimMontage(InMontage, InPlayRate, StartSectionName);
+	}
+}
+
+void AMobyGameCharacter::MultCastReborn_Implementation()
+{
+
+	if (GetLocalRole() == ENetRole::ROLE_Authority)
+	{
+		GetCharacterAttribute()->Reset();
+
+		MultCastWidgetInfo(
+			GetCharacterAttribute()->GetHealthPercentage(),
+			GetCharacterAttribute()->GetManaPercentage());
+	}
+
+	StopAnimMontage();
+}
+
 UAnimMontage* AMobyGameCharacter::GetCurrentSkillMontage(ESkillKeyType SillKey)
 {
 	int32 CharacterID = MethodUnit::GetCharacterID(GetWorld(), PlayerID);
@@ -205,30 +228,28 @@ float AMobyGameCharacter::TakeDamage(float Damage, struct FDamageEvent const& Da
 				GetCharacterAttribute()->GetManaPercentage());
 			GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, "GameCharacter");
 
-			//if (IsDie())
-			//{
-			//	int32 CharacterID = InState->GetCharacterID(PlayerID);
-			//	if (const FCharacterTable* InTable = InState->GetCharacterTableTemplate(CharacterID))
-			//	{
-			//		int32 Index = FMath::RandRange(0, InTable->Death.Num() - 1);
-			//		MultCastPlayerAnimMontage(InTable->Death[Index]);
+			if (IsDie())
+			{
+				int32 CharacterID = InState->GetCharacterID(PlayerID);
+				if (const FCharacterTable* InTable = InState->GetCharacterTableTemplate(CharacterID))
+				{
+					int32 Index = FMath::RandRange(0, InTable->Death.Num() - 1);
+					MultCastPlayerAnimMontage(InTable->Death[Index]);
 
-			//		//GThread::Get()->GetCoroutines().BindUObject(5.f, this, &AMobyGameCharacter::MultCastReborn);
-			//	}
-			//}
+					if (InitTimeHandle.IsValid())
+					{
+						GetWorld()->GetTimerManager().ClearTimer(InitTimeHandle);
+					}
+
+					GetWorld()->GetTimerManager().SetTimer(InitTimeHandle, this, &AMobyGameCharacter::MultCastReborn, 3.0f);
+					//GThread::Get()->GetCoroutines().BindUObject(5.f, this, &AMobyGameCharacter::MultCastReborn);
+				}
+			}
 
 		}
 	}
 
 	return 0;
-}
-
-void AMobyGameCharacter::MultCastPlayerAnimMontage_Implementation(UAnimMontage* InMontage, float InPlayRate, FName StartSectionName)
-{
-	if (InMontage)
-	{
-		PlayAnimMontage(InMontage, InPlayRate, StartSectionName);
-	}
 }
 
 void AMobyGameCharacter::SetTeam(ETeamType InTeamType)
