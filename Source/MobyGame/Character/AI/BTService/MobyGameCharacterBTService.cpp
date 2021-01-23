@@ -6,7 +6,7 @@
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Float.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Bool.h"
-#include "../AIController/MobyGameAIController.h"
+#include "../AIController/Core/MobyGameAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 void UMobyGameCharacterBTService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)

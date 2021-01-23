@@ -4,7 +4,7 @@
 #include "AnimNotify_Attack.h"
 #include "../Item/Bullet.h"
 #include "../CharacterInstance/MobyGameCharacter.h"
-#include "../AI/AIController/MobyGameAIController.h"
+#include "../AI/AIController/Core/MobyGameAIController.h"
 
 UAnimNotify_Attack::UAnimNotify_Attack()
 {

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "../../../UI/Core/UI_Base.h"
+#include "UI_HealthBar.h"
 #include "UI_InformationBar.generated.h"
 
 class UProgressBar;
@@ -12,15 +12,12 @@ class UTextBlock;
  *
  */
 UCLASS()
-class MOBYGAME_API UUI_InformationBar : public UUI_Base
+class MOBYGAME_API UUI_InformationBar : public UUI_HealthBar
 {
 	GENERATED_BODY()
 
-		UPROPERTY(meta = (BindWidget))
-		UTextBlock* Title;
-
 	UPROPERTY(meta = (BindWidget))
-		UProgressBar* Health;
+		UTextBlock* Title;
 
 	UPROPERTY(meta = (BindWidget))
 		UProgressBar* Mana;
@@ -30,7 +27,6 @@ public:
 	virtual void NativeConstruct() override;
 
 	void SetTitle(const FString& Msg);
-	void SetHealth(float InPercentage);
 	void SetMana(float InPercentage);
 };
 

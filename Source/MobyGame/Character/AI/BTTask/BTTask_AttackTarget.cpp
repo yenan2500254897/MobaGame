@@ -2,7 +2,7 @@
 
 
 #include "BTTask_AttackTarget.h"
-#include "../AIController/MobyGameAIController.h"
+#include "../AIController/Core/MobyGameAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 EBTNodeResult::Type UBTTask_AttackTarget::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)

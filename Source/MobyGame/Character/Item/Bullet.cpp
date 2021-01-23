@@ -6,7 +6,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "../CharacterInstance/MobyGameCharacter.h"
 #include "Kismet/GameplayStatics.h"
-#include "../AI/AIController/MobyGameAIController.h"
+#include "../AI/AIController/Core/MobyGameAIController.h"
 #include "../../Common/NumericalCalculationUnit.h"
 
 // Sets default values

@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "../../../MobyGameType.h"
-#include "../../CharacterInstance/MobyGameCharacter.h"
+#include "../../../../MobyGameType.h"
+#include "../../../CharacterInstance/MobyGameCharacter.h"
 #include "MobyGameAIController.generated.h"
 
 /**
@@ -37,7 +37,7 @@ protected:
 protected:
 	TWeakObjectPtr<AMobyGameCharacter> Target;
 
-private:
+protected:
 	UPROPERTY()
 	class UBehaviorTree* BTAsset;
 

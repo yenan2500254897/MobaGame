@@ -14,10 +14,6 @@ void UUI_InformationBar::SetTitle(const FString& Msg)
 	Title->SetText(FText::FromString(Msg));
 }
 
-void UUI_InformationBar::SetHealth(float InPercentage)
-{
-	Health->SetPercent(InPercentage);
-}
 
 void UUI_InformationBar::SetMana(float InPercentage)
 {

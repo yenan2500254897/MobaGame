@@ -13,7 +13,7 @@
 #include "Engine/World.h"
 //#include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Common/MethodUnit.h"
-#include "Character/AI/AIController/MobyGameAIController.h"
+#include "Character/AI/AIController/Core/MobyGameAIController.h"
 #include "MobyGamePlayerState.h"
 #include "PlayerComponent/PlayerDataComponent.h"
 

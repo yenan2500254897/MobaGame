@@ -2,7 +2,7 @@
 
 
 #include "BTDecorator_SimpleCooldown.h"
-#include "../AIController/MobyGameAIController.h"
+#include "../AIController/Core/MobyGameAIController.h"
 #include "../../CharacterInstance/MobyGameCharacter.h"
 
 

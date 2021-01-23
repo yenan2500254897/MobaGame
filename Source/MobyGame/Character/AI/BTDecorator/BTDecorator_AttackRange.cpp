@@ -2,7 +2,7 @@
 
 
 #include "BTDecorator_AttackRange.h"
-#include "../AIController/MobyGameAIController.h"
+#include "../AIController/Core/MobyGameAIController.h"
 #include "../../CharacterInstance/MobyGameCharacter.h"
 
 void UBTDecorator_AttackRange::InitializeMemory(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTMemoryInit::Type InitType) const

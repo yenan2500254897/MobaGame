@@ -23,8 +23,12 @@ void AMobyGameAIController::NormalAttack(TWeakObjectPtr<AMobyGameCharacter> InTa
 
 void AMobyGameAIController::SimpleMoveToLocation(const FVector& InNewLocation)
 {
-	SetTargetForce(NULL);
-	GetBlackboardComponent()->SetValueAsVector("Location", InNewLocation);
+	if (GetBlackboardComponent())
+	{
+		SetTargetForce(NULL);
+		GetBlackboardComponent()->SetValueAsVector("Location", InNewLocation);
+
+	}
 }
 
 AMobyGameCharacter* AMobyGameAIController::FindTarget()
@@ -34,9 +38,12 @@ AMobyGameCharacter* AMobyGameAIController::FindTarget()
 
 void AMobyGameAIController::SetTargetForce(AMobyGameCharacter* InTarget)
 {
-	GetBlackboardComponent()->SetValueAsObject("Target", InTarget);
+	if (GetBlackboardComponent())
+	{
+		GetBlackboardComponent()->SetValueAsObject("Target", InTarget);
+		Target = InTarget;
+	}
 
-	Target = InTarget;
 }
 
 void AMobyGameAIController::BeginPlay()
