@@ -1,3 +1,4 @@
+#pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 #include "MobyGamePlayerState.generated.h"

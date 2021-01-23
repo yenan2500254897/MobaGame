@@ -19,3 +19,22 @@ enum class ETeamType : uint8
 	TEAM_BLUE,
 	TEAM_NEUTRAL,
 };
+
+UENUM()
+enum class ECharacterType : uint8
+{
+	PLAYER						UMETA(DisplayName = "Player"),
+
+	REMOTE_MINION				UMETA(DisplayName = "Remote Minion"),
+	WARRIOR_MINION				UMETA(DisplayName = "Warrior Minion"),
+	BIG_MINION					UMETA(DisplayName = "Big Minion"),
+	SUPER_MINION				UMETA(DisplayName = "Super Minion"),
+
+	FIRST_CLASS_TURRETS			UMETA(DisplayName = "First Class Tower"),
+	SECONDARY_DEFENSE_TOWER		UMETA(DisplayName = "Secondary Defense Tower"),
+	HIGHLAND_DEFENSE_TOWER		UMETA(DisplayName = "Highland Defense Tower"),
+	BASE_TOWER					UMETA(DisplayName = "Base Tower"),
+
+	WILD_MONSTER				UMETA(DisplayName = "Wild Monster"),
+	WILD_BOSS_MONSTER			UMETA(DisplayName = "Wild Boss"),
+};

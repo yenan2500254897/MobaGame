@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Core/MobyGameTableBase.h"
+#include "../MobyGameType.h"
 #include "CharacterTable.generated.h"
 
 USTRUCT(BlueprintType)
@@ -15,6 +16,9 @@ struct FCharacterTable : public FMobyGameTableBase
 
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class")
 	TSubclassOf<APawn> CharacterClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Character Class")
+	ECharacterType CharacterType;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Character Class")
 	TArray<UAnimMontage*> NormalAttack;

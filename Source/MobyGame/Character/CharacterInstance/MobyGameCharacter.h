@@ -48,10 +48,12 @@ public:
 	bool IsDie();
 
 	void SetTeam(ETeamType InTeamType);
+	void SetCharacterType(ECharacterType InCharacterType);
 
 public:
 	FORCEINLINE int64 GePlayerID() { return PlayerID; }
 	FORCEINLINE ETeamType GeTeam() { return TeamType; }
+	FORCEINLINE ECharacterType GetCharacterType() { return CharacterType; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -69,5 +71,6 @@ private:
 private:
 	FTimerHandle InitTimeHandle;
 	ETeamType TeamType;
+	ECharacterType CharacterType;
 };
 
