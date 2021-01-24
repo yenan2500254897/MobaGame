@@ -34,28 +34,49 @@ void UMobyGameCharacterBTService::TickNode(UBehaviorTreeComponent& OwnerComp, ui
 					if (!InTarget)
 					{
 						InTarget = OwnerController->FindTarget();
+						if (InTarget)
+						{
+							MyBlackBoard->SetValueAsObject(BlackboardKey_Target.SelectedKeyName, InTarget);
+						}
 					}
 
 					float Distance = 999999.0f;
+
 					if (InTarget)
 					{
 						Distance = FVector::Dist(InTarget->GetActorLocation(), OwnerCharacter->GetActorLocation());
-
-						float RangeAttack = OwnerCharacter->GetCharacterAttribute()->RangeAttack;
-						if (Distance > RangeAttack)
+						//	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("%f"), Distance));
+						if (Distance > 2000.f || InTarget->IsDie())
 						{
-							//ƫ�ƽ��� ����ת��
-							MyBlackBoard->SetValueAsVector(BlackboardKey_Location.SelectedKeyName, InTarget->GetActorLocation());
+							OwnerController->SetTargetForce(NULL);
+							Distance = 999999.0f;
+							if (InTarget->IsDie())
+							{
+								MyBlackBoard->SetValueAsVector(BlackboardKey_Location.SelectedKeyName, OwnerCharacter->GetActorLocation());
+							}
+							else
+							{
+								//MyBlackBoard->SetValueAsVector(BlackBoardKey_Location.SelectedKeyName, InTarget->GetActorLocation());
+							}
 						}
 						else
 						{
-							//ƫ�ƽ��� ����ת��
-							FVector D = InTarget->GetActorLocation() - OwnerCharacter->GetActorLocation();
-							D.Normalize();
-							FVector Pos = OwnerCharacter->GetActorLocation() + D * 20;
-							MyBlackBoard->SetValueAsVector(BlackboardKey_Location.SelectedKeyName, Pos);
+							float RangeAttack = OwnerCharacter->GetCharacterAttribute()->RangeAttack;
+
+							if (Distance > RangeAttack)
+							{
+								MyBlackBoard->SetValueAsVector(BlackboardKey_Location.SelectedKeyName, InTarget->GetActorLocation());
+							}
+							else
+							{
+								FVector D = InTarget->GetActorLocation() - OwnerCharacter->GetActorLocation();
+								D.Normalize();
+								FVector Pos = OwnerCharacter->GetActorLocation() + D * 20;
+								MyBlackBoard->SetValueAsVector(BlackboardKey_Location.SelectedKeyName, Pos);
+							}
 						}
 					}
+					
 
 					MyBlackBoard->SetValueAsFloat(BlackboardKey_Distance.SelectedKeyName, Distance);
 				}

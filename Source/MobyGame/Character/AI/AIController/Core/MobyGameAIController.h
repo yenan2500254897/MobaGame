@@ -19,15 +19,16 @@ class MOBYGAME_API AMobyGameAIController : public AAIController
 public:
 	AMobyGameAIController();
 
-	void InitContorller();
+	UFUNCTION()
+	virtual void InitContorller();
 
 	void NormalAttack(TWeakObjectPtr<AMobyGameCharacter> InTarget);
 
 	void SimpleMoveToLocation(const FVector& InNewLocation);
 
-	AMobyGameCharacter* FindTarget();
+	virtual AMobyGameCharacter* FindTarget();
 
-	void SetTargetForce(AMobyGameCharacter* InTarget);
+	virtual void SetTargetForce(AMobyGameCharacter* InTarget);
 
 	AMobyGameCharacter* GetTarget() { return Target.Get(); }
 

@@ -6,8 +6,8 @@
 #include "BehaviorTree/BlackboardComponent.h"
 AMobyGameAIController::AMobyGameAIController()
 {
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree> Behavior_Tree(TEXT("/Game/TopDownCPP/AI/ABH"));
-	BTAsset = Behavior_Tree.Object;
+	/*static ConstructorHelpers::FObjectFinder<UBehaviorTree> Behavior_Tree(TEXT("/Game/TopDownCPP/AI/ABH"));
+	BTAsset = Behavior_Tree.Object;*/
 }
 
 void AMobyGameAIController::NormalAttack(TWeakObjectPtr<AMobyGameCharacter> InTarget)

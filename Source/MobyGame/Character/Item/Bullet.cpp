@@ -22,8 +22,8 @@ ABullet::ABullet()
 	RootComponent = RootBullet;
 	BoxDamage->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
-	ProjectileMovement->MaxSpeed = 2000.f;
-	ProjectileMovement->InitialSpeed = 1600.f;
+	ProjectileMovement->MaxSpeed = 4000.f;
+	ProjectileMovement->InitialSpeed = 3500.f;
 	ProjectileMovement->ProjectileGravityScale = 0.f;
 	ProjectileMovement->UpdatedComponent = BoxDamage;
 

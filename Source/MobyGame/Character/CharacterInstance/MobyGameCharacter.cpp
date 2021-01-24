@@ -80,6 +80,10 @@ void AMobyGameCharacter::MultCastWidgetInfo_Implementation(float InHPPercentage,
 			InformationBar->SetHealth(InHPPercentage);
 			InformationBar->SetMana(InManaPercentage);
 		}
+		else if (UUI_HealthBar* InHealthBar = Cast<UUI_HealthBar>(Widget->GetUserWidgetObject()))
+		{
+			InHealthBar->SetHealth(InHPPercentage);
+		}
 	}
 }
 
@@ -186,6 +190,7 @@ void AMobyGameCharacter::InitCharacter()
 	{
 		if (FCharacterAttribute* Data = InState->GetCharacterAttribute(PlayerID))
 		{
+			GetCharacterMovement()->MaxWalkSpeed = Data->WalkSpeed;
 			MultCastWidgetInfo(Data->GetHealthPercentage(), Data->GetManaPercentage());
 		}
 	}
