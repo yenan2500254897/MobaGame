@@ -49,29 +49,53 @@ void AMobyGameGameMode::BeginPlay()
 void AMobyGameGameMode::InitialMode()
 {
 
-	AActor* M = UGameplayStatics::GetActorOfClass(GetWorld(), ACharacterSpawnPoint::StaticClass());
-	int32 CharacterID = 11110;
-	UClass* DefaultPawnClassTmp = NULL;
-
-	if (AMobyGameState* InState = GetWorld()->GetGameState<AMobyGameState>())
+	int64 InPlayerID = 1231451;
+	if (AMobyGameState* InGameState = GetWorld()->GetGameState<AMobyGameState>())
 	{
-		const FCharacterTable* InTable = InState->GetCharacterTableTemplate(CharacterID);
-		if (InTable)
+		TArray<AActor*> SpawnPointArrays;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACharacterSpawnPoint::StaticClass(), SpawnPointArrays);
+		for (auto& Tmp : SpawnPointArrays)
 		{
-			DefaultPawnClassTmp = InTable->CharacterClass;
-		}
-
-		if (DefaultPawnClassTmp)
-		{
-			AMobyGameCharacter* MobyGameCharacter = GetWorld()->SpawnActor<AMobyGameCharacter>(DefaultPawnClassTmp, M->GetActorLocation(), M->GetActorRotation());
-			if (MobyGameCharacter)
+			if (ACharacterSpawnPoint* M = Cast<ACharacterSpawnPoint>(Tmp))
 			{
-				int InPlayerID = 123456;
-				if (InPlayerID != INDEX_NONE)
+				int32 CharacterID = INDEX_NONE;
+				if (M->GetCharacterType() == ECharacterType::FIRST_CLASS_TURRETS)
 				{
-					MobyGameCharacter->RegisterCharacter(InPlayerID, CharacterID);
-					MobyGameCharacter->SetTeam(ETeamType::TEAM_RED);
-					MobyGameCharacter->SetCharacterType(InTable->CharacterType);
+					CharacterID = 22220;
+				}
+				else if (M->GetCharacterType() == ECharacterType::WARRIOR_MINION)
+				{
+					CharacterID = 11110;
+				}
+				else if (M->GetCharacterType() == ECharacterType::WILD_MONSTER)
+				{
+					CharacterID = 33330;
+				}
+
+				UClass* DefaultPawnClassTmp = NULL;
+				const FCharacterTable* InTable = InGameState->GetCharacterTableTemplate(CharacterID);
+				if (InTable)
+				{
+					DefaultPawnClassTmp = InTable->CharacterClass;
+				}
+				else
+				{
+					return;
+				}
+
+				if (DefaultPawnClassTmp)
+				{
+					AMobyGameCharacter* MobyGameCharacter = GetWorld()->SpawnActor<AMobyGameCharacter>(DefaultPawnClassTmp, M->GetActorLocation(), M->GetActorRotation());
+					if (MobyGameCharacter)
+					{
+						InPlayerID++;
+						if (InPlayerID != INDEX_NONE)
+						{
+							MobyGameCharacter->RegisterCharacter(InPlayerID, CharacterID);
+							MobyGameCharacter->SetTeam(ETeamType::TEAM_RED);
+							MobyGameCharacter->SetCharacterType(InTable->CharacterType);
+						}
+					}
 				}
 			}
 		}

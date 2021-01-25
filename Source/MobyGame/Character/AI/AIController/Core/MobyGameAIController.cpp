@@ -27,7 +27,6 @@ void AMobyGameAIController::SimpleMoveToLocation(const FVector& InNewLocation)
 	{
 		SetTargetForce(NULL);
 		GetBlackboardComponent()->SetValueAsVector("Location", InNewLocation);
-
 	}
 }
 

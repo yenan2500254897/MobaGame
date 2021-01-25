@@ -264,5 +264,5 @@ void AMobyGameCharacter::SetTeam(ETeamType InTeamType)
 
 void AMobyGameCharacter::SetCharacterType(ECharacterType InCharacterType)
 {
-	InCharacterType = CharacterType;
+	CharacterType = InCharacterType;
 }

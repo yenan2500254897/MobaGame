@@ -44,20 +44,22 @@ void UAnimNotify_Attack::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceB
 		{
 			if (AMobyGameCharacter* NewCharacter = Cast<AMobyGameCharacter>(MeshComp->GetOuter()))
 			{
-				if (AMobyGameAIController* OnwerController = Cast<AMobyGameAIController>(NewCharacter->GetController()))
+				if (AMobyGameAIController* OwnerController = Cast<AMobyGameAIController>(NewCharacter->GetController()))
 				{
-					if (OnwerController->GetTarget())
+					if (OwnerController->GetTarget())
 					{
-						ComponentRotation = FRotationMatrix::MakeFromX(OnwerController->GetTarget()->GetActorLocation() - ComponentLocation).Rotator();
+						ComponentRotation = FRotationMatrix::MakeFromX(OwnerController->GetTarget()->GetActorLocation() - ComponentLocation).Rotator();
 
-						/*if (NewCharacter->GetCharacterType() >= ECharacterType::FIRST_CLASS_TURRETS &&
+						if (NewCharacter->GetCharacterType() >= ECharacterType::FIRST_CLASS_TURRETS &&
 							NewCharacter->GetCharacterType() <= ECharacterType::BASE_TOWER)
 						{
+							
+							GEngine->AddOnScreenDebugMessage(-1, 0.5, FColor::Black, FString::Printf(TEXT("rotator:%d  %d  %d"), NewCharacter->GetActorRotation().Pitch, NewCharacter->GetActorRotation().Yaw, NewCharacter->GetActorRotation().Roll));
 							if (NewCharacter->GetActorRotation() != FRotator::ZeroRotator)
 							{
 								ComponentRotation -= NewCharacter->GetActorRotation();
 							}
-						}*/
+						}
 					}
 				}
 			}
