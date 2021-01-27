@@ -110,42 +110,6 @@ void AMobyGameCharacter::MultCastReborn_Implementation()
 	StopAnimMontage();
 }
 
-UAnimMontage* AMobyGameCharacter::GetCurrentSkillMontage(ESkillKeyType SillKey)
-{
-	int32 CharacterID = MethodUnit::GetCharacterID(GetWorld(), PlayerID);
-	if (CharacterID != INDEX_NONE)
-	{
-		if (const FCharacterTable* CharacterTable = MethodUnit::GetCharacterTable(GetWorld(), CharacterID))
-		{
-			switch (SillKey)
-			{
-			case ESkillKeyType::KEY_Q:return CharacterTable->QSkillAttack;
-			case ESkillKeyType::KEY_W:return CharacterTable->WSkillAttack;
-			case ESkillKeyType::KEY_E:return CharacterTable->ESkillAttack;
-			case ESkillKeyType::KEY_R:return CharacterTable->RSkillAttack;
-			}
-		}
-	}
-
-	return NULL;
-}
-
-void AMobyGameCharacter::SkillAttack(ESkillKeyType SillKey, TWeakObjectPtr<AMobyGameCharacter> InTarget)
-{
-	int32 CharacterID = MethodUnit::GetCharacterID(GetWorld(), PlayerID);
-	if (CharacterID != INDEX_NONE)
-	{
-		if (const FCharacterTable* CharacterTable = MethodUnit::GetCharacterTable(GetWorld(), CharacterID))
-		{
-			if (UAnimMontage* MontageInstance = GetCurrentSkillMontage(SillKey))
-			{
-				//���Ŷ���
-				MultCastPlayerAnimMontage(MontageInstance);
-			}
-		}
-	}
-}
-
 bool AMobyGameCharacter::IsDie()
 {
 	if (GetCharacterAttribute()->Health <= 0.f)
@@ -204,7 +168,7 @@ void AMobyGameCharacter::Tick(float DeltaSeconds)
 	{
 		if (AMobyGameState* InState = MethodUnit::GetGameState(GetWorld()))
 		{
-			InState->UpdateCharacterAILocation(GePlayerID(), GetActorLocation());
+			InState->UpdateCharacterAILocation(GetPlayerID(), GetActorLocation());
 		}
 	}
 }

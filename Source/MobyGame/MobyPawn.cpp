@@ -2,7 +2,7 @@
 
 
 #include "MobyPawn.h"
-#include "Character/CharacterInstance/MobyGameCharacter.h"
+#include "Character/CharacterInstance/MobyGamePlayerCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
@@ -17,7 +17,7 @@
 #include "MobyGamePlayerState.h"
 #include "PlayerComponent/PlayerDataComponent.h"
 
-void AMobyPawn::SkillAttack(ESkillKeyType SkillType, TWeakObjectPtr<AMobyGameCharacter> InTarget)
+void AMobyPawn::SkillAttack(ESkillKeyType SkillType, TWeakObjectPtr<AMobyGamePlayerCharacter> InTarget)
 {
 	if (MobyGameCharacter)
 	{
@@ -92,7 +92,7 @@ void AMobyPawn::InitPlayer()
 
 		if (DefaultPawnClass)
 		{
-			MobyGameCharacter = GetWorld()->SpawnActor<AMobyGameCharacter>(DefaultPawnClass, GetActorLocation(), GetActorRotation());
+			MobyGameCharacter = GetWorld()->SpawnActor<AMobyGamePlayerCharacter>(DefaultPawnClass, GetActorLocation(), GetActorRotation());
 			if (MobyGameCharacter)
 			{
 				int64 InPlayerID = GetPlayerID();

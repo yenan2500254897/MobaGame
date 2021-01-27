@@ -7,7 +7,7 @@
 #include "MobyGameType.h"
 #include "MobyPawn.generated.h"
 
-class AMobyGameCharacter;
+class AMobyGamePlayerCharacter;
 class UPlayerDataComponent;
 class AMobyGamePlayerState;
 UCLASS()
@@ -19,7 +19,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Classes)
 	TSubclassOf<APawn> DefaultPawnClass;
 public:
-	void SkillAttack(ESkillKeyType SkillType, TWeakObjectPtr<AMobyGameCharacter> InTarget);
+	void SkillAttack(ESkillKeyType SkillType, TWeakObjectPtr<AMobyGamePlayerCharacter> InTarget);
 
 public:
 	/** Returns TopDownCameraComponent subobject **/
@@ -72,7 +72,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	FORCEINLINE AMobyGameCharacter* GetControllerCharacter() { return MobyGameCharacter; }
+	FORCEINLINE AMobyGamePlayerCharacter* GetControllerCharacter() { return MobyGameCharacter; }
 
 public:
 	int64 GetPlayerID();
@@ -83,7 +83,7 @@ public:
 
 protected:
 	UPROPERTY()
-		AMobyGameCharacter* MobyGameCharacter;
+		AMobyGamePlayerCharacter* MobyGameCharacter;
 
 private:
 	FTimerHandle InitTimeHandle;

@@ -26,11 +26,10 @@ public:
 
 	void NormalAttack(TWeakObjectPtr<AMobyGameCharacter> InTarget);
 
-	void SkillAttack(ESkillKeyType SkillType, TWeakObjectPtr<AMobyGameCharacter> InTarget);
-
 	void RegisterCharacter(const int64& InPlayerID, int32 CharacterID);
 
-	void InitCharacter();
+	UFUNCTION()
+	virtual void InitCharacter();
 
 	UFUNCTION(NetMulticast, unreliable)
 	void MultCastPlayerAnimMontage(UAnimMontage *InMontage, float InPlayRate = 1.0f, FName StartSectionName = NAME_None);
@@ -43,16 +42,14 @@ public:
 
 	FCharacterAttribute* GetCharacterAttribute();
 
-	UAnimMontage* GetCurrentSkillMontage(ESkillKeyType SkillType);
-
 	bool IsDie();
 
 	void SetTeam(ETeamType InTeamType);
 	void SetCharacterType(ECharacterType InCharacterType);
 
 public:
-	FORCEINLINE int64 GePlayerID() { return PlayerID; }
-	FORCEINLINE ETeamType GeTeam() { return TeamType; }
+	FORCEINLINE int64 GetPlayerID() { return PlayerID; }
+	FORCEINLINE ETeamType GetTeam() { return TeamType; }
 	FORCEINLINE ECharacterType GetCharacterType() { return CharacterType; }
 
 protected:
