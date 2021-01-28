@@ -22,13 +22,12 @@ void ATurretsAIController::Tick(float DeltaTime)
 		if (AMobyGameTurretsCharacter* OnwerCharacter = GetPawn<AMobyGameTurretsCharacter>())
 		{
 			FRotator R = FRotationMatrix::MakeFromX(Target->GetActorLocation() - GetPawn()->GetActorLocation()).Rotator();
-			OnwerCharacter->TowersRotator = FVector2D(R.Pitch, R.Yaw);
+			OnwerCharacter->TowersRotator = FVector2D(R.Pitch, (float)R.Yaw-90.0f);
 			if (GetPawn()->GetActorRotation() != FRotator::ZeroRotator)
 			{
 				FVector2D NewRot = FVector2D(GetPawn()->GetActorRotation().Pitch, GetPawn()->GetActorRotation().Yaw);
 				OnwerCharacter->TowersRotator -= NewRot;
 			}
-			
 		}
 	}
 }
