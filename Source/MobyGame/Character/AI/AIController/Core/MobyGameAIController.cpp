@@ -63,3 +63,11 @@ void AMobyGameAIController::InitContorller()
 
 	RunBehaviorTree(BTAsset);
 }
+
+void AMobyGameAIController::StopAttackRot(bool bAttackRot)
+{
+	if (GetBlackboardComponent())
+	{
+		GetBlackboardComponent()->SetValueAsBool("bStopRot", bAttackRot);
+	}
+}

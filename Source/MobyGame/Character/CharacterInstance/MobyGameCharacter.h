@@ -47,10 +47,16 @@ public:
 	void SetTeam(ETeamType InTeamType);
 	void SetCharacterType(ECharacterType InCharacterType);
 
+	void ResetSpeed(float InSpeed);
+
+
+	FVector GetFireLocation();
+	FRotator GetFireRotator();
 public:
 	FORCEINLINE int64 GetPlayerID() { return PlayerID; }
 	FORCEINLINE ETeamType GetTeam() { return TeamType; }
 	FORCEINLINE ECharacterType GetCharacterType() { return CharacterType; }
+	FORCEINLINE UArrowComponent* GetFirePoint() const { return OpenFriePoint; }
 
 protected:
 	// Called when the game starts or when spawned

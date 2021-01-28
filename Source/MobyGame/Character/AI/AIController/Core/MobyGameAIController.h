@@ -32,6 +32,8 @@ public:
 
 	AMobyGameCharacter* GetTarget() { return Target.Get(); }
 
+	void StopAttackRot(bool bAttackRot);
+
 protected:
 	virtual void BeginPlay() override;
 

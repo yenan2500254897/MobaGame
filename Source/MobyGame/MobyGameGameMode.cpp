@@ -43,7 +43,7 @@ void AMobyGameGameMode::BeginPlay()
 
 
 	}*/
-	GetWorld()->GetTimerManager().SetTimer(InitTimeHandle, this, &AMobyGameGameMode::InitialMode, 3.0f);
+	GetWorld()->GetTimerManager().SetTimer(InitTimeHandle, this, &AMobyGameGameMode::InitialMode, 2.0f);
 }
 
 void AMobyGameGameMode::InitialMode()

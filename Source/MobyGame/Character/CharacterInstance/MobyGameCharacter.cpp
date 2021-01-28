@@ -205,12 +205,12 @@ float AMobyGameCharacter::TakeDamage(float Damage, struct FDamageEvent const& Da
 					int32 Index = FMath::RandRange(0, InTable->Death.Num() - 1);
 					MultCastPlayerAnimMontage(InTable->Death[Index]);
 
-					if (InitTimeHandle.IsValid())
+					/*if (InitTimeHandle.IsValid())
 					{
 						GetWorld()->GetTimerManager().ClearTimer(InitTimeHandle);
-					}
+					}*/
 
-					GetWorld()->GetTimerManager().SetTimer(InitTimeHandle, this, &AMobyGameCharacter::MultCastReborn, 3.0f);
+					GetWorld()->GetTimerManager().SetTimer(InitTimeHandle, this, &AMobyGameCharacter::MultCastReborn, 2.0f);
 					//GThread::Get()->GetCoroutines().BindUObject(5.f, this, &AMobyGameCharacter::MultCastReborn);
 				}
 			}
@@ -229,4 +229,29 @@ void AMobyGameCharacter::SetTeam(ETeamType InTeamType)
 void AMobyGameCharacter::SetCharacterType(ECharacterType InCharacterType)
 {
 	CharacterType = InCharacterType;
+}
+
+void AMobyGameCharacter::ResetSpeed(float InSpeed)
+{
+	if (GetLocalRole() == ENetRole::ROLE_Authority)
+	{
+		if (InSpeed == INDEX_NONE)
+		{
+			GetCharacterMovement()->MaxWalkSpeed = GetCharacterAttribute()->WalkSpeed;
+		}
+		else
+		{
+			GetCharacterMovement()->MaxWalkSpeed = InSpeed;
+		}
+	}
+}
+
+FVector AMobyGameCharacter::GetFireLocation()
+{
+	return OpenFriePoint->GetComponentLocation();
+}
+
+FRotator AMobyGameCharacter::GetFireRotator()
+{
+	return OpenFriePoint->GetComponentRotation();
 }

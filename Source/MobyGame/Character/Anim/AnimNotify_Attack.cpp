@@ -49,12 +49,11 @@ void UAnimNotify_Attack::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceB
 					if (OwnerController->GetTarget())
 					{
 						ComponentRotation = FRotationMatrix::MakeFromX(OwnerController->GetTarget()->GetActorLocation() - ComponentLocation).Rotator();
-
 						if (NewCharacter->GetCharacterType() >= ECharacterType::FIRST_CLASS_TURRETS &&
 							NewCharacter->GetCharacterType() <= ECharacterType::BASE_TOWER)
 						{
 							
-							GEngine->AddOnScreenDebugMessage(-1, 0.5, FColor::Black, FString::Printf(TEXT("rotator:%d  %d  %d"), NewCharacter->GetActorRotation().Pitch, NewCharacter->GetActorRotation().Yaw, NewCharacter->GetActorRotation().Roll));
+							//GEngine->AddOnScreenDebugMessage(-1, 0.5, FColor::Black, FString::Printf(TEXT("Rotator:%d  %d  %d"), NewCharacter->GetActorRotation().Pitch, NewCharacter->GetActorRotation().Yaw, NewCharacter->GetActorRotation().Roll));
 							if (NewCharacter->GetActorRotation() != FRotator::ZeroRotator)
 							{
 								ComponentRotation -= NewCharacter->GetActorRotation();
@@ -67,6 +66,8 @@ void UAnimNotify_Attack::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceB
 			//Character->GetLocalRole() == ENetRole::ROLE_Authority
 			FActorSpawnParameters ActorSpawnParameters;
 			ActorSpawnParameters.Instigator = Cast<APawn>(Character);
+			//GEngine->AddOnScreenDebugMessage(-1, 0.5, FColor::Red, FString::Printf(TEXT("generate bullet at:x=:%d  y=:%d  z:=%d"), ComponentLocation.X, ComponentLocation.Y, ComponentLocation.Z));
+
 			if (ABullet* Bullet = Character->GetWorld()->SpawnActor<ABullet>(BulletClass, ComponentLocation, ComponentRotation, ActorSpawnParameters))
 			{
 				Bullet->SetCheck(bCheck);
